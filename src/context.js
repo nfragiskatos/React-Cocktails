@@ -9,37 +9,40 @@ const AppProvider = ({ children }) => {
 	const [ searchTerm, setSearchTerm ] = useState('a');
 	const [ cocktails, setCocktails ] = useState([]);
 
-	const fetchDrinks = async () => {
-		setLoading(true);
-		try {
-			const response = await fetch(`${url}${searchTerm}`);
-			const data = await response.json();
-			const { drinks } = data;
-			let newCocktails = [];
-			if (drinks) {
-				newCocktails = drinks.map((drink) => {
-					const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } = drink;
-					return {
-						id    : idDrink,
-						name  : strDrink,
-						image : strDrinkThumb,
-						info  : strAlcoholic,
-						glass : strGlass
-					};
-				});
+	const fetchDrinks = useCallback(
+		async () => {
+			setLoading(true);
+			try {
+				const response = await fetch(`${url}${searchTerm}`);
+				const data = await response.json();
+				const { drinks } = data;
+				let newCocktails = [];
+				if (drinks) {
+					newCocktails = drinks.map((drink) => {
+						const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } = drink;
+						return {
+							id    : idDrink,
+							name  : strDrink,
+							image : strDrinkThumb,
+							info  : strAlcoholic,
+							glass : strGlass
+						};
+					});
+				}
+				setCocktails(newCocktails);
+			} catch (error) {
+				console.log(error);
 			}
-			setCocktails(newCocktails);
-		} catch (error) {
-			console.log(error);
-		}
-		setLoading(false);
-	};
+			setLoading(false);
+		},
+		[ searchTerm ]
+	);
 
 	useEffect(
 		() => {
 			fetchDrinks();
 		},
-		[ searchTerm ]
+		[ searchTerm, fetchDrinks ]
 	);
 
 	return <AppContext.Provider value={{ loading, cocktails, setSearchTerm }}>{children}</AppContext.Provider>;
