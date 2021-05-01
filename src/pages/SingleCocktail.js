@@ -1,6 +1,7 @@
 import React from 'react';
 import Loading from '../components/Loading';
 import { useParams, Link } from 'react-router-dom';
+import { env } from '../ProjectProperties';
 const url = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 
 const SingleCocktail = () => {
@@ -76,7 +77,7 @@ const SingleCocktail = () => {
 	const { name, image, category, info, glass, instructions, ingredients } = cocktail;
 	return (
 		<section className="section cocktail-section">
-			<Link className="btn btn-primary" to="/">
+			<Link className="btn btn-primary" to={env.nav.home}>
 				back home
 			</Link>
 			<h2 className="section-title">{name}</h2>

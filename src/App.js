@@ -7,22 +7,23 @@ import SingleCocktail from './pages/SingleCocktail';
 import Error from './pages/Error';
 // import components
 import Navbar from './components/Navbar';
+import { env } from './ProjectProperties';
 function App () {
 	return (
 		<div>
 			<Router>
 				<Navbar />
 				<Switch>
-					<Route exact path="/">
+					<Route exact path={env.nav.home}>
 						<Home />
 					</Route>
-					<Route path="/about">
+					<Route path={env.nav.about}>
 						<About />
 					</Route>
-					<Route path="/cocktail/:id">
+					<Route path={env.nav.cocktailDetails}>
 						<SingleCocktail />
 					</Route>
-					<Route path="*">
+					<Route path={env.nav.error}>
 						<Error />
 					</Route>
 				</Switch>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { env } from '../ProjectProperties';
 
 const Cocktail = ({ id, image, name, info, glass }) => {
 	return (
@@ -11,7 +12,7 @@ const Cocktail = ({ id, image, name, info, glass }) => {
 				<h3>{name}</h3>
 				<h4>{glass}</h4>
 				<p>{info}</p>
-				<Link className="btn btn-primary btn-details" to={`/cocktail/${id}`}>
+				<Link className="btn btn-primary btn-details" to={env.nav.cocktailDetails.replace(':id', id)}>
 					details
 				</Link>
 			</div>
